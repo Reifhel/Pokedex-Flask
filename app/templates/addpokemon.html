@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cadastrar Pokémon</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='cadastro.css') }}"
+    />
+  </head>
+  <body>
+    <h1>Cadastrar Pokémon</h1>
+    <form>
+      <label for="nome">Nome:</label>
+      <input type="text" id="nome" name="nome" required />
+
+      <label for="tipo_base">Tipo Base:</label>
+      <input type="text" id="tipo_base" name="tipo_base" required />
+
+      <label for="tipo_sec">Tipo Secundário (opcional):</label>
+      <input type="text" id="tipo_sec" name="tipo_sec" />
+
+      <label for="url_image">URL da Imagem:</label>
+      <input type="text" id="url_image" name="url_image" required />
+
+      <button type="submit" onclick="cadastrar()">Cadastrar Pokémon</button>
+    </form>
+  </body>
+  <script>
+    function cadastrar() {
+      nome = document.getElementById("nome").value;
+      tipo_base = document.getElementById("tipo_base").value;
+      tipo_sec = document.getElementById("tipo_sec").value;
+      url_image = document.getElementById("url_image").value;
+
+      fetch("/api/add_pokemons", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          NOME: nome,
+          TIPO_BASE: tipo_base,
+          TIPO_SEC: tipo_sec,
+          URL_IMAGE: url_image,
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => console.log(data));
+    }
+  </script>
+</html>

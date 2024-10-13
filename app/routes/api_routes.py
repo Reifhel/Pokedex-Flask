@@ -1,7 +1,56 @@
 from flask import Blueprint, jsonify, request
-from app.models import Pokemon, db
+from sqlalchemy.exc import IntegrityError
+from app.models import Pokemon, User, db
 
 api_bp = Blueprint('api', __name__, url_prefix='/api')
+
+
+@api_bp.route("/cadastrar_user", methods=['POST'])
+def cadastra_user():
+    data = request.get_json()
+    name = data.get("USER")
+    password = data.get("PASSWORD")
+
+    if not name or not password:
+        return jsonify({"error": "NOME e PASSWORD são obrigatórios!"}), 400
+
+    new_user = User(USER=name, PASSWORD=password)
+
+    try:
+        db.session.add(new_user)
+        db.session.commit()
+        return jsonify({"message": f"Usuário {name} adicionado com sucesso!"}), 201
+    except IntegrityError:
+        db.session.rollback()  # Reverte a transação se houver erro
+        return jsonify({"error": "Usuário já existe!"}), 500
+    except Exception as e:
+        db.session.rollback()  # Reverte a transação para qualquer outro erro
+        return jsonify({"error": f"Ocorreu um erro: {str(e)}"}), 500
+
+
+@api_bp.route("/login", methods=['POST'])
+def login():
+    data = request.get_json()
+    name = data.get("USER")
+    password = data.get("PASSWORD")
+
+    if not name or not password:
+        return jsonify({"error": "NOME e PASSWORD são obrigatórios!"}), 400
+
+    user = User.query.filter_by(USER=name).first()
+
+    if user and user.PASSWORD == password:
+        return jsonify({"message": "Login bem-sucedido!"}), 200
+    else:
+        return jsonify({"error": "Nome de usuário ou senha incorretos!"}), 401
+
+
+@api_bp.route('/users', methods=['GET'])
+def users():
+    users = User.query.all()
+    user_list = [{"ID": p.ID, "USUARIO": p.USER}
+                 for p in users]
+    return jsonify(user_list), 200
 
 
 @api_bp.route('/pokemons', methods=['GET'])
@@ -12,7 +61,7 @@ def get_pokemons():
     return jsonify(pokemon_list), 200
 
 
-@api_bp.route('/pokemons', methods=['POST'])
+@api_bp.route('/add_pokemons', methods=['POST'])
 def create_pokemon():
     data = request.get_json()
     name = data.get("NOME")
