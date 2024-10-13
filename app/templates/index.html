@@ -3,9 +3,27 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Pokédex</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
   </head>
   <body>
-    oi
+    <h1>Pokédex</h1>
+    <div class="card-container">
+      {% for pokemon in pokemons %}
+      <div class="card">
+        <img src="{{ pokemon.URL_IMAGE }}" alt="{{ pokemon.NOME }}" />
+        <h2>{{ pokemon.NOME }}</h2>
+        <p>Tipo Base: {{ pokemon.TIPO_BASE }}</p>
+        {% if pokemon.TIPO_SEC %}
+        <p>Tipo Secundário: {{ pokemon.TIPO_SEC }}</p>
+        {% else %}
+        <p>Tipo Secundário: None</p>
+        {% endif %}
+      </div>
+      {% endfor %}
+    </div>
   </body>
 </html>
