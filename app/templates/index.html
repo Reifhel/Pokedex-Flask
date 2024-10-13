@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -15,13 +15,15 @@
       {% for pokemon in pokemons %}
       <div class="card">
         <img src="{{ pokemon.URL_IMAGE }}" alt="{{ pokemon.NOME }}" />
+        <p class="pokemon-number">Nº {{ '%04d' % pokemon.ID }}</p>
+        <!-- Formata o ID com quatro dígitos -->
         <h2>{{ pokemon.NOME }}</h2>
-        <p>Tipo Base: {{ pokemon.TIPO_BASE }}</p>
-        {% if pokemon.TIPO_SEC %}
-        <p>Tipo Secundário: {{ pokemon.TIPO_SEC }}</p>
-        {% else %}
-        <p>Tipo Secundário: None</p>
-        {% endif %}
+        <div class="pokemon-types">
+          <span class="type type-base">{{ pokemon.TIPO_BASE }}</span>
+          {% if pokemon.TIPO_SEC %}
+          <span class="type type-secondary">{{ pokemon.TIPO_SEC }}</span>
+          {% endif %}
+        </div>
       </div>
       {% endfor %}
     </div>

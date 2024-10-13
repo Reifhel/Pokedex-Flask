@@ -15,7 +15,6 @@ def get_pokemons():
 @api_bp.route('/pokemons', methods=['POST'])
 def create_pokemon():
     data = request.get_json()
-    print(data)
     name = data.get("NOME")
     base_type = data.get("TIPO_BASE")
     sec_type = data.get("TIPO_SEC")
