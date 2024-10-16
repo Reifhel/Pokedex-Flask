@@ -132,6 +132,8 @@ h2 {
   height: 24px; /* Defina o tamanho do ícone */
   object-fit: contain; /* Garante que a imagem se encaixe dentro do contêiner */
 
+  border-radius: 50%;
+  background-color: #ffffff;
   cursor: pointer;
 }
 
