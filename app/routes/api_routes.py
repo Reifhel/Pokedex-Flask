@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 from sqlalchemy.exc import IntegrityError
-from app.models import Pokemon, User, db
+from app.models import Pokemon, User, Capturas, db
 
 api_bp = Blueprint('api', __name__, url_prefix='/api')
 
@@ -56,9 +56,40 @@ def users():
 @api_bp.route('/pokemons', methods=['GET'])
 def get_pokemons():
     pokemons = Pokemon.query.all()
-    pokemon_list = [{"ID": p.ID, "NOME": p.NOME, "TIPO_BASE": p.TIPO_BASE, "TIPO_SECUNDARIO": p.TIPO_SEC, "URL_IMAGEM": p.URL_IMAGE}
+    pokemon_list = [{"id": p.ID, "nome": p.NOME, "tipo_base": p.TIPO_BASE, "tipo_sec": p.TIPO_SEC, "url_image": p.URL_IMAGE, "capturado": False}
                     for p in pokemons]
     return jsonify(pokemon_list), 200
+
+
+@api_bp.route('/capturados', methods=['GET'])
+def get_all_with_capturados():
+    user_name = request.args.get('user')
+
+    # Tenta encontrar o usuário pelo nome
+    user = User.query.filter_by(USER=user_name).first()
+    if not user:
+        return jsonify({"error": "Usuário não encontrado"}), 404
+
+    # Obtém IDs dos Pokémons capturados pelo usuário
+    capturados_ids = {
+        c.ID_POKEMON for c in Capturas.query.filter_by(ID_USER=user.ID)}
+
+    # Busca todos os Pokémons
+    all_pokemons = Pokemon.query.all()
+    pokemons_data = []
+
+    # Marca cada Pokémon como capturado ou não
+    for pokemon in all_pokemons:
+        pokemons_data.append({
+            "id": pokemon.ID,
+            "nome": pokemon.NOME,
+            "tipo_base": pokemon.TIPO_BASE,
+            "tipo_sec": pokemon.TIPO_SEC,
+            "url_image": pokemon.URL_IMAGE,
+            "capturado": pokemon.ID in capturados_ids
+        })
+
+    return jsonify(pokemons_data)
 
 
 @api_bp.route('/add_pokemons', methods=['POST'])
@@ -78,3 +109,47 @@ def create_pokemon():
     db.session.commit()
 
     return jsonify({"message": f"Pokémon {name} adicionado com sucesso!"}), 201
+
+
+@api_bp.route('/add_captura', methods=['POST'])
+def add_captura():
+    user_name = request.args.get('user')
+    id_pokemon = request.args.get('id_pokemon')
+
+    # Tenta encontrar o usuário pelo nome
+    user = User.query.filter_by(USER=user_name).first()
+    if not user:
+        return jsonify({"error": "Usuário não encontrado"}), 404
+
+    # Adicionar nova captura
+    nova_captura = Capturas(ID_USER=user.ID, ID_POKEMON=id_pokemon)
+    db.session.add(nova_captura)
+    db.session.commit()
+
+    return jsonify({"message": "Captura adicionada com sucesso!"}), 201
+
+
+@api_bp.route('/remove_captura', methods=['DELETE'])
+def remove_captura():
+    user = request.args.get('user')
+    id_pokemon = request.args.get('id_pokemon')
+
+    if not user or not id_pokemon:
+        return jsonify({"error": "Usuário e ID do Pokémon são obrigatórios!"}), 400
+
+    # Verificar se o usuário existe
+    user_record = User.query.filter_by(USER=user).first()
+    if not user_record:
+        return jsonify({"error": "Usuário não encontrado!"}), 404
+
+    # Verificar se a captura existe
+    captura_existente = Capturas.query.filter_by(
+        ID_USER=user_record.ID, ID_POKEMON=id_pokemon).first()
+    if not captura_existente:
+        return jsonify({"error": "Captura não encontrada!"}), 404
+
+    # Remover a captura
+    db.session.delete(captura_existente)
+    db.session.commit()
+
+    return jsonify({"message": "Captura removida com sucesso!"}), 200

@@ -6,26 +6,47 @@
     <title>Pokédex</title>
     <link
       rel="stylesheet"
-      href="{{ url_for('static', filename='style.css') }}"
+      href="{{ url_for('static', filename='./css/style.css') }}"
     />
   </head>
   <body>
-    <h1>Pokédex</h1>
-    <div class="card-container">
-      {% for pokemon in pokemons %}
-      <div class="card">
-        <img src="{{ pokemon.URL_IMAGE }}" alt="{{ pokemon.NOME }}" />
-        <p class="pokemon-number">Nº {{ '%04d' % pokemon.ID }}</p>
-        <!-- Formata o ID com quatro dígitos -->
-        <h2>{{ pokemon.NOME }}</h2>
-        <div class="pokemon-types">
-          <span class="type type-base">{{ pokemon.TIPO_BASE }}</span>
-          {% if pokemon.TIPO_SEC %}
-          <span class="type type-secondary">{{ pokemon.TIPO_SEC }}</span>
-          {% endif %}
-        </div>
+    <header>
+      <h1>Pokédex</h1>
+      <a href="/add_pokemon">Cadastro de Pokemon</a>
+      <a href="/login">Login</a>
+    </header>
+
+    <main>
+      <form class="input-container">
+        <input
+          type="text"
+          name="movie-name"
+          id="movie-name"
+          placeholder="Digite algum filme para pesquisar..."
+        />
+        <img
+          src="{{ url_for('static', filename='./img/search-icon.svg') }}"
+          alt="Ícone de pesquisa"
+          class="searchIcon"
+        />
+      </form>
+
+      <div class="showOnlyFavorites">
+        <input type="checkbox" name="onlyFavorites" id="onlyFavorites" />
+        <label for="onlyFavorites">Mostrar apenas meus filmes favoritos</label>
       </div>
-      {% endfor %}
-    </div>
+
+      <div class="card-container"></div>
+    </main>
+
+    <script
+      id="pokeballIcon"
+      data-url="{{ url_for('static', filename='img/pokeball.png') }}"
+    ></script>
+    <script
+      id="pokeballFillIcon"
+      data-url="{{ url_for('static', filename='img/pokeball_fill.png') }}"
+    ></script>
+    <script src="{{ url_for('static', filename='./js/index.js') }}"></script>
   </body>
 </html>

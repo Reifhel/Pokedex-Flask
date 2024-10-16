@@ -17,6 +17,7 @@ class Pokemon(db.Model):
 
 
 class Capturas(db.Model):
-    ID_USER = db.Column(db.Integer, sa.ForeignKey('user.ID'), primary_key=True)
+    ID_USER = db.Column(db.Integer, sa.ForeignKey(
+        'user.ID'), primary_key=True)
     ID_POKEMON = db.Column(db.Integer, sa.ForeignKey(
         'pokemon.ID'), primary_key=True)

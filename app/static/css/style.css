@@ -1,0 +1,180 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Kumbh Sans", sans-serif;
+}
+
+body {
+  height: 100%;
+  display: flex;
+  align-items: start;
+  justify-content: center;
+}
+
+header {
+  width: 100%;
+  height: 70px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  position: absolute;
+
+  color: #fff;
+  background-color: red;
+
+  z-index: 2;
+  box-shadow: 0 0 10px var(--primary-color-contrast);
+}
+
+main {
+  width: 100%;
+  top: 70px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  max-width: 1260px;
+  background-color: purple;
+}
+
+h1 {
+  font-size: 2em;
+  margin: 20px 0;
+}
+
+h2 {
+  color: #fff;
+  text-align: center;
+  margin: 2rem 0;
+}
+
+.form {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+.form button {
+  background-color: transparent;
+  border: none;
+}
+.input-container {
+  background-color: #f0f0f0;
+  width: 50%;
+  margin: 0 auto;
+  margin-bottom: 2rem;
+  display: flex;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+}
+
+.input-container input {
+  padding: 0.5rem;
+  width: 100%;
+  height: 100%;
+  outline: none;
+  border: none;
+  background-color: transparent;
+  color: #000000;
+}
+
+.input-container img {
+  cursor: pointer;
+}
+
+.showOnlyFavorites {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #000000;
+}
+
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center;
+}
+
+.card {
+  position: relative; /* Permite posicionamento absoluto dos filhos */
+  width: 200px; /* Defina a largura do card */
+  padding: 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  overflow: hidden; /* Para cortar o que transborda */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #f8f8f8;
+
+  text-align: center;
+}
+
+.image-container {
+  position: relative; /* Para permitir o posicionamento absoluto do ícone */
+  width: 100%; /* Ocupa toda a largura do card */
+  max-height: 150px; /* Define uma altura máxima para a imagem do Pokémon */
+  overflow: hidden; /* Garante que nada transborde */
+}
+
+.pokemon-image {
+  width: 100%; /* Mantém a imagem dentro do contêiner */
+  height: auto; /* Mantém a proporção da imagem */
+  object-fit: cover; /* Cobre o espaço mantendo a proporção */
+}
+
+.capture-icon {
+  position: absolute; /* Permite posicionamento relativo ao card */
+  top: 8px; /* Ajuste conforme necessário */
+  right: 8px; /* Ajuste conforme necessário */
+  width: 24px; /* Defina o tamanho do ícone */
+  height: 24px; /* Defina o tamanho do ícone */
+  object-fit: contain; /* Garante que a imagem se encaixe dentro do contêiner */
+
+  cursor: pointer;
+}
+
+.card {
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 16px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #f8f8f8;
+}
+
+.pokemon-number {
+  font-size: 0.9em;
+  color: #666;
+  margin-top: 10px;
+}
+
+.card h2 {
+  font-size: 1.25em;
+  margin: 8px 0;
+  color: #333;
+}
+
+.pokemon-types {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.type {
+  font-size: 0.85em;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+
+.type-base {
+  background-color: #6ac97b; /* Cor para o tipo base */
+}
+
+.type-secondary {
+  background-color: #a56cc1; /* Cor para o tipo secundário */
+}

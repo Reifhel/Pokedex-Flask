@@ -96,13 +96,14 @@
           return Promise.reject(response);
         })
         .then((json) => {
-          // all good, token is ready
+          // Deu certo login
           alert("Login efetuado com sucesso!");
           localStorage.setItem("User", nome);
+          window.location.href = "/";
         })
         .catch((response) => {
           console.log(response.status, response.statusText);
-          // 3. get error messages, if any
+          // Casp tenha erros dar alerta para eles
           response.json().then((json) => {
             alert(Object.values(json));
           });
