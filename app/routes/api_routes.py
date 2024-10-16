@@ -22,7 +22,7 @@ def cadastra_user():
         return jsonify({"message": f"Usuário {name} adicionado com sucesso!"}), 201
     except IntegrityError:
         db.session.rollback()  # Reverte a transação se houver erro
-        return jsonify({"error": "Usuário já existe!"}), 500
+        return jsonify({"error": "Usuário {name} já existe!"}), 500
     except Exception as e:
         db.session.rollback()  # Reverte a transação para qualquer outro erro
         return jsonify({"error": f"Ocorreu um erro: {str(e)}"}), 500
@@ -90,6 +90,17 @@ def get_all_with_capturados():
         })
 
     return jsonify(pokemons_data)
+
+
+@api_bp.route('/pesquisar_pokemon', methods=['GET'])
+def search_pokemon():
+    search = request.args.get('search')
+
+    # Obtém os Pokémons que contem o valor pesquisado pelo usuário no nome
+    resultado_pesquisa = [{"id": p.ID, "nome": p.NOME, "tipo_base": p.TIPO_BASE, "tipo_sec": p.TIPO_SEC, "url_image": p.URL_IMAGE, "capturado": False}
+                          for p in Pokemon.query.filter(Pokemon.NOME.contains(search))]
+
+    return jsonify(resultado_pesquisa), 201
 
 
 @api_bp.route('/add_pokemons', methods=['POST'])

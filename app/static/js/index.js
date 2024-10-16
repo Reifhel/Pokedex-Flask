@@ -13,15 +13,15 @@ checkboxInput.addEventListener("change", checkCheckboxStatus);
 searchButton.addEventListener("click", searchPokemon);
 form.addEventListener("submit", function (event) {
   event.preventDefault();
-  searchMovie();
+  searchPokemon();
 });
 
 isAuthenticated = localStorage.getItem("User") ? true : false;
 
 async function getAllPokemon() {
   try {
-    const user = localStorage.getItem("User");
-    if (user) {
+    if (isAuthenticated) {
+      const user = localStorage.getItem("User");
       // Se o usuário está autenticado, traz apenas os Pokémons capturados
       const response = await fetch(`/api/capturados?user=${user}`);
       if (!response.ok) throw new Error("Erro ao buscar Pokémons capturados");
@@ -92,7 +92,27 @@ function checkCheckboxStatus() {
   return;
 }
 
-function searchPokemon() {
+async function searchPokemon() {
+  const pesquisa = input.value;
+  clearPokemon();
+  if (pesquisa != "") {
+    try {
+      const response = await fetch(`/api/pesquisar_pokemon?search=${pesquisa}`);
+      if (!response.ok) throw new Error("Erro ao buscar Pokémons");
+
+      pokemons = await response.json();
+
+      // Renderiza os cards de Pokémon
+      pokemons.forEach((poke) => renderCard(poke));
+      console.log(pokemons);
+    } catch (error) {
+      console.error(error);
+      alert(error);
+    }
+    // Se o usuário está autenticado, traz apenas os Pokémons capturados
+  } else {
+    getAllPokemon();
+  }
   return;
 }
 
@@ -158,4 +178,8 @@ function renderCard(pokemon) {
 
   card.appendChild(pokemonTypes); // Adiciona a seção de tipos ao card
   cardContainer.appendChild(card); // Adiciona o card ao contêiner
+}
+
+function clearPokemon() {
+  pokemon_container.innerHTML = "";
 }

@@ -100,7 +100,10 @@
         })
         .then((json) => {
           // all good, token is ready
-          alert("Conta criada com sucesso!");
+          alert(
+            "Conta criada com sucesso! Você será encaminhado para a tela de login"
+          );
+          window.location.href = "/login";
         })
         .catch((response) => {
           console.log(response.status, response.statusText);
