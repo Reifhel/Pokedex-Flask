@@ -45,6 +45,8 @@ async function getAllPokemon() {
 }
 
 window.onload = function () {
+  // Chame a função após a verificação do login
+  checkAuthAndEnableCheckbox();
   getAllPokemon();
 };
 
@@ -88,8 +90,21 @@ async function captureButtonPressed(event, id_pokemon) {
   }
 }
 
-function checkCheckboxStatus() {
-  return;
+async function checkCheckboxStatus() {
+  const isChecked = checkboxInput.checked;
+  clearPokemon();
+  if (isChecked) {
+    const user = localStorage.getItem("User");
+    // Se o usuário está autenticado, traz apenas os Pokémons capturados
+    const response = await fetch(`/api/capturados?user=${user}&only=${true}`);
+    if (!response.ok) throw new Error("Erro ao buscar Pokémons capturados");
+
+    pokemons = await response.json();
+    pokemons.forEach((poke) => renderCard(poke));
+    console.log(pokemons);
+  } else {
+    getAllPokemon();
+  }
 }
 
 async function searchPokemon() {
@@ -182,4 +197,12 @@ function renderCard(pokemon) {
 
 function clearPokemon() {
   pokemon_container.innerHTML = "";
+}
+
+function checkAuthAndEnableCheckbox() {
+  if (isAuthenticated) {
+    checkboxInput.disabled = false;
+  } else {
+    checkboxInput.disabled = true;
+  }
 }

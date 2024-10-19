@@ -64,6 +64,7 @@ def get_pokemons():
 @api_bp.route('/capturados', methods=['GET'])
 def get_all_with_capturados():
     user_name = request.args.get('user')
+    only = request.args.get('only')
 
     # Tenta encontrar o usuário pelo nome
     user = User.query.filter_by(USER=user_name).first()
@@ -79,15 +80,29 @@ def get_all_with_capturados():
     pokemons_data = []
 
     # Marca cada Pokémon como capturado ou não
-    for pokemon in all_pokemons:
-        pokemons_data.append({
-            "id": pokemon.ID,
-            "nome": pokemon.NOME,
-            "tipo_base": pokemon.TIPO_BASE,
-            "tipo_sec": pokemon.TIPO_SEC,
-            "url_image": pokemon.URL_IMAGE,
-            "capturado": pokemon.ID in capturados_ids
-        })
+    # caso tenha o parametro 'only' mandar apenas os capturados senão todos
+    if only and only == 'true':
+        for pokemon in all_pokemons:
+            # caso seja um capturado
+            if pokemon.ID in capturados_ids:
+                pokemons_data.append({
+                    "id": pokemon.ID,
+                    "nome": pokemon.NOME,
+                    "tipo_base": pokemon.TIPO_BASE,
+                    "tipo_sec": pokemon.TIPO_SEC,
+                    "url_image": pokemon.URL_IMAGE,
+                    "capturado": True
+                })
+    else:
+        for pokemon in all_pokemons:
+            pokemons_data.append({
+                "id": pokemon.ID,
+                "nome": pokemon.NOME,
+                "tipo_base": pokemon.TIPO_BASE,
+                "tipo_sec": pokemon.TIPO_SEC,
+                "url_image": pokemon.URL_IMAGE,
+                "capturado": pokemon.ID in capturados_ids
+            })
 
     return jsonify(pokemons_data)
 

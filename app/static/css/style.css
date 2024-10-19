@@ -37,6 +37,7 @@ main {
   align-items: center;
   justify-content: center;
   max-width: 1260px;
+  padding-block: 1rem;
   background-color: purple;
 }
 
