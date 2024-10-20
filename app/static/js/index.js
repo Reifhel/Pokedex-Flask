@@ -37,7 +37,7 @@ async function getAllPokemon() {
 
     // Renderiza os cards de Pokémon
     pokemons.forEach((poke) => renderCard(poke));
-    console.log(pokemons);
+  
   } catch (error) {
     console.error(error);
     alert("Não foi possível carregar os Pokémons.");
@@ -101,7 +101,6 @@ async function checkCheckboxStatus() {
 
     pokemons = await response.json();
     pokemons.forEach((poke) => renderCard(poke));
-    console.log(pokemons);
   } else {
     getAllPokemon();
   }
@@ -119,7 +118,6 @@ async function searchPokemon() {
 
       // Renderiza os cards de Pokémon
       pokemons.forEach((poke) => renderCard(poke));
-      console.log(pokemons);
     } catch (error) {
       console.error(error);
       alert(error);
