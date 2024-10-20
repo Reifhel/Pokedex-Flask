@@ -125,6 +125,7 @@ def create_pokemon():
     base_type = data.get("TIPO_BASE")
     sec_type = data.get("TIPO_SEC")
     url_image = data.get("URL_IMAGE")
+    print(data)
 
     if not name or not base_type or not url_image:
         return jsonify({"error": "NOME, TIPO_BASE e URL_IMAGE são obrigatórios!"}), 400

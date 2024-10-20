@@ -6,39 +6,59 @@
 }
 
 body {
-  height: 100%;
+  background-color: #e0e0e0;
   display: flex;
-  align-items: start;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  height: 100vh;
 }
 
 header {
   width: 100%;
   height: 70px;
+  background-color: #ac2222; /* Cor do header */
   display: flex;
-  flex-direction: row;
   align-items: center;
-  justify-content: space-around;
-  position: absolute;
+  justify-content: space-between;
+  padding: 0 20px;
+  position: relative;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
 
-  color: #fff;
-  background-color: red;
+header h1 {
+  font-family: "Jester", sans-serif; /* Fonte Jester */
+  font-size: 25px; /* Tamanho da fonte */
+  color: white;
+}
 
-  z-index: 2;
-  box-shadow: 0 0 10px var(--primary-color-contrast);
+header .right-buttons {
+  display: flex;
+  align-items: center;
+}
+
+header .right-buttons a {
+  color: white;
+  background-color: #ffffff33;
+  border-radius: 5px;
+  padding: 10px 20px;
+  margin: 10px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+header .right-buttons a:hover {
+  background-color: #ffffff55;
 }
 
 main {
   width: 100%;
-  top: 70px;
-  position: relative;
+  max-width: 1260px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  max-width: 1260px;
-  padding-block: 1rem;
-  background-color: purple;
+  margin-top: 20px;
 }
 
 h1 {
@@ -62,6 +82,7 @@ h2 {
   background-color: transparent;
   border: none;
 }
+
 .input-container {
   background-color: #f0f0f0;
   width: 50%;
@@ -70,6 +91,7 @@ h2 {
   display: flex;
   padding: 0.5rem 1rem;
   border-radius: 0.5rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .input-container input {
@@ -103,8 +125,8 @@ h2 {
   position: relative; /* Permite posicionamento absoluto dos filhos */
   width: 200px; /* Defina a largura do card */
   padding: 16px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
+  border: 1px solid #ddd;
+  border-radius: 12px;
   overflow: hidden; /* Para cortar o que transborda */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   background-color: #f8f8f8;
@@ -136,15 +158,6 @@ h2 {
   border-radius: 50%;
   background-color: #ffffff;
   cursor: pointer;
-}
-
-.card {
-  border: 1px solid #ddd;
-  border-radius: 12px;
-  padding: 16px;
-  text-align: center;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  background-color: #f8f8f8;
 }
 
 .pokemon-number {
@@ -180,4 +193,14 @@ h2 {
 
 .type-secondary {
   background-color: #a56cc1; /* Cor para o tipo secundário */
+}
+
+footer {
+  width: 100%;
+  background-color: #333;
+  color: white;
+  text-align: center;
+  padding: 10px;
+  margin-top: auto;
+  position: relative;
 }

@@ -6,46 +6,139 @@
     <title>Cadastrar Pokémon</title>
     <link
       rel="stylesheet"
-      href="{{ url_for('static', filename='cadastro.css') }}"
+      href="{{ url_for('static', filename='./css/add_pokemon.css') }}"
     />
   </head>
   <body>
-    <h1>Cadastrar Pokémon</h1>
-    <form>
-      <label for="nome">Nome:</label>
-      <input type="text" id="nome" name="nome" required />
+    <header>
+      <h1>"Pokédex"</h1>
+      <div class="right-buttons">
+        <a href="/">INICIO</a>
+        <a href="/login">LOGIN</a>
+      </div>
+    </header>
+    <main>
+      <div class="formulario">
+        <h1>Cadastrar Pokémon</h1>
+        <form id="form">
+          <label for="nome">Nome:</label>
+          <input type="text" id="nome" name="nome" required />
 
-      <label for="tipo_base">Tipo Base:</label>
-      <input type="text" id="tipo_base" name="tipo_base" required />
+          <label for="tipo_base">Tipo Base:</label>
+          <input type="text" id="tipo_base" name="tipo_base" required />
 
-      <label for="tipo_sec">Tipo Secundário (opcional):</label>
-      <input type="text" id="tipo_sec" name="tipo_sec" />
+          <label for="tipo_sec">Tipo Secundário (opcional):</label>
+          <input type="text" id="tipo_sec" name="tipo_sec" />
 
-      <label for="url_image">URL da Imagem:</label>
-      <input type="text" id="url_image" name="url_image" required />
+          <label for="url_image">URL da Imagem:</label>
+          <input type="text" id="url_image" name="url_image" required />
 
-      <button type="submit" onclick="cadastrar()">Cadastrar Pokémon</button>
-    </form>
+          <button class="botao" type="submit" onclick="cadastrar()">
+            Cadastrar Pokémon
+          </button>
+        </form>
+      </div>
+
+      <div class="card_space">
+        <div class="card">
+          <div class="image-container">
+            <img
+              src="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/054.png"
+              alt="a"
+              class="pokemon-image"
+              id="image_card"
+            /><img
+              src="/static/img/pokeball.png"
+              alt="Capture Icon"
+              class="capture-icon"
+            />
+          </div>
+          <p class="pokemon-number">Nº 0001</p>
+          <h2 id="nome_card">Insira um nome</h2>
+          <div class="pokemon-types">
+            <span id="tipo_pri_card" class="type type-base">Tipo primario</span
+            ><span id="tipo_sec_card" class="type type-secondary"
+              >Tipo Secundário</span
+            >
+          </div>
+        </div>
+      </div>
+    </main>
   </body>
   <script>
+    const nome_input = document.getElementById("nome");
+    const campo_nome = document.getElementById("nome_card");
+    // Captura o valor enquanto o usuário digita
+    nome_input.addEventListener("input", (event) => {
+      if (event.target.value === "") {
+        campo_nome.innerHTML = "Insira um nome";
+      } else {
+        campo_nome.innerHTML = event.target.value;
+      }
+    });
+
+    const image_input = document.getElementById("url_image");
+    const campo_url = document.getElementById("image_card");
+    // Captura o valor enquanto o usuário digita
+    image_input.addEventListener("input", (event) => {
+      if (event.target.value === "") {
+        campo_url.src =
+          "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/054.png";
+      } else {
+        campo_url.src = event.target.value;
+      }
+    });
+
+    const tipo_base = document.getElementById("tipo_base");
+    const campo_tipo_base = document.getElementById("tipo_pri_card");
+    // Captura o valor enquanto o usuário digita
+    tipo_base.addEventListener("input", (event) => {
+      if (event.target.value === "") {
+        campo_tipo_base.innerHTML = "Insira um tipo";
+      } else {
+        campo_tipo_base.innerHTML = event.target.value;
+      }
+    });
+
+    const tipo_sec = document.getElementById("tipo_sec");
+    const campo_tipo_sec = document.getElementById("tipo_sec_card");
+    // Captura o valor enquanto o usuário digita
+    tipo_sec.addEventListener("input", (event) => {
+      if (event.target.value === "") {
+        campo_tipo_sec.innerHTML = "Insira um tipo";
+      } else {
+        campo_tipo_sec.innerHTML = event.target.value;
+      }
+    });
+
+    const form = document.getElementById("form");
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+    });
+
     function cadastrar() {
-      nome = document.getElementById("nome").value;
-      tipo_base = document.getElementById("tipo_base").value;
-      tipo_sec = document.getElementById("tipo_sec").value;
-      url_image = document.getElementById("url_image").value;
+      // Capture os valores diretamente dos campos de entrada
+      const nome = nome_input.value;
+      const tipoBase = tipo_base.value;
+      const tipoSec = tipo_sec.value;
+      const imageUrl = image_input.value;
+
+      console.log(nome, tipoBase, tipoSec, imageUrl);
 
       fetch("/api/add_pokemons", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           NOME: nome,
-          TIPO_BASE: tipo_base,
-          TIPO_SEC: tipo_sec,
-          URL_IMAGE: url_image,
+          TIPO_BASE: tipoBase,
+          TIPO_SEC: tipoSec,
+          URL_IMAGE: imageUrl,
         }),
       })
         .then((response) => response.json())
         .then((data) => console.log(data));
+
+      alert("Pokemon cadastrado com sucesso!");
     }
   </script>
 </html>

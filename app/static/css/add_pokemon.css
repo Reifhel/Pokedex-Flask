@@ -63,7 +63,7 @@ main {
   margin-top: 0px;
 }
 
-.login-container {
+.formulario {
   display: flex;
   flex-direction: column;
   position: relative; /* Permite posicionamento absoluto dos filhos */
@@ -108,4 +108,78 @@ form input {
 
 .botao:hover {
   background-color: #6b0404;
+}
+
+.card {
+  position: relative; /* Permite posicionamento absoluto dos filhos */
+  width: 400px; /* Defina a largura do card */
+  padding: 16px;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  overflow: hidden; /* Para cortar o que transborda */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #f8f8f8;
+
+  text-align: center;
+}
+
+.image-container {
+  position: relative; /* Para permitir o posicionamento absoluto do ícone */
+  width: 100%; /* Ocupa toda a largura do card */
+  max-height: 350px; /* Define uma altura máxima para a imagem do Pokémon */
+  overflow: hidden; /* Garante que nada transborde */
+}
+
+.pokemon-image {
+  width: 100%; /* Mantém a imagem dentro do contêiner */
+  height: auto; /* Mantém a proporção da imagem */
+  object-fit: cover; /* Cobre o espaço mantendo a proporção */
+}
+
+.capture-icon {
+  position: absolute; /* Permite posicionamento relativo ao card */
+  top: 8px; /* Ajuste conforme necessário */
+  right: 8px; /* Ajuste conforme necessário */
+  width: 24px; /* Defina o tamanho do ícone */
+  height: 24px; /* Defina o tamanho do ícone */
+  object-fit: contain; /* Garante que a imagem se encaixe dentro do contêiner */
+
+  border-radius: 50%;
+  background-color: #ffffff;
+  cursor: pointer;
+}
+
+.pokemon-number {
+  font-size: 0.9em;
+  color: #666;
+  margin-top: 10px;
+}
+
+.card h2 {
+  font-size: 1.25em;
+  margin: 8px 0;
+  color: #333;
+}
+
+.pokemon-types {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.type {
+  font-size: 0.85em;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+
+.type-base {
+  background-color: #e27171; /* Cor para o tipo base */
+}
+
+.type-secondary {
+  background-color: #a56cc1; /* Cor para o tipo secundário */
 }

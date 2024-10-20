@@ -8,12 +8,18 @@
       rel="stylesheet"
       href="{{ url_for('static', filename='./css/style.css') }}"
     />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Kumbh+Sans&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
     <header>
-      <h1>Pokédex</h1>
-      <a href="/add_pokemon">Cadastro de Pokemon</a>
-      <a href="/login">Login</a>
+      <h1>"Pokédex"</h1>
+      <div class="right-buttons">
+        <a href="/add_pokemon">CADASTRAR POKEMON</a>
+        <a href="/login">LOGIN</a>
+      </div>
     </header>
 
     <main>
