@@ -23,3 +23,7 @@ def login():
 @page_bp.route('/cadastro')
 def cadastro():
     return render_template('cadastro.html')
+
+@page_bp.route('/fibonacci')
+def fibonacci():
+    return render_template('fibonacci.html')
