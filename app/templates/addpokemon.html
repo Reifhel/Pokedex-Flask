@@ -14,7 +14,8 @@
       <h1>"Pokédex"</h1>
       <div class="right-buttons">
         <a href="/">INICIO</a>
-        <a href="/login">LOGIN</a>
+        <a href="/fibonacci">FUNÇÃO EMSCRIPTEN (fibonacci)</a>
+        <a href="/login" id="loginLogout">LOGIN</a>
       </div>
     </header>
     <main>
@@ -48,7 +49,7 @@
               class="pokemon-image"
               id="image_card"
             /><img
-              src="{{ url_for('static', filename='./image/pokeball_fill.jpg') }}"
+              src="{{ url_for('static', filename='img/pokeball_fill.png') }}"
               alt="Capture Icon"
               class="capture-icon"
             />
@@ -116,6 +117,17 @@
       event.preventDefault();
     });
 
+    const aLogin = document.getElementById("loginLogout");
+    isAuthenticated = localStorage.getItem("User") ? true : false;
+
+    aLogin.addEventListener("click", removeUser);
+    window.onload = function () {
+      if (isAuthenticated) {
+        aLogin.href = "/";
+        aLogin.innerHTML = "Sair";
+      }
+    };
+
     function cadastrar() {
       // Capture os valores diretamente dos campos de entrada
       const nome = nome_input.value;
@@ -139,6 +151,9 @@
         .then((data) => console.log(data));
 
       alert("Pokemon cadastrado com sucesso!");
+    }
+    function removeUser() {
+      localStorage.removeItem("User");
     }
   </script>
 </html>

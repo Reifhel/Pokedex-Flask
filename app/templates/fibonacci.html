@@ -36,13 +36,18 @@
       <h1>Pokédex</h1>
       <div class="right-buttons">
         <a href="/">INICIO</a>
-        <a href="/login">LOGIN</a>
+        <a href="/add_pokemon">CADASTRAR POKEMON</a>
+        <a href="/login" id="loginLogout">LOGIN</a>
       </div>
     </header>
     <main>
       <div class="fibonacci-box">
         <h2>Calcule Fibonacci</h2>
-        <input type="number" id="fibonacciInput" placeholder="Digite um número" />
+        <input
+          type="number"
+          id="fibonacciInput"
+          placeholder="Digite um número"
+        />
         <button onclick="calculateFibonacci()">Play</button>
         <p id="fibonacciResult"></p>
       </div>
@@ -73,6 +78,20 @@
           document.getElementById("fibonacciResult").textContent =
             "Por favor, insira um número válido.";
         }
+      }
+
+      const aLogin = document.getElementById("loginLogout");
+      isAuthenticated = localStorage.getItem("User") ? true : false;
+
+      aLogin.addEventListener("click", removeUser);
+      window.onload = function () {
+        if (isAuthenticated) {
+          aLogin.href = "/";
+          aLogin.innerHTML = "Sair";
+        }
+      };
+      function removeUser() {
+        localStorage.removeItem("User");
       }
     </script>
     <script src="{{ url_for('static', filename='./js/out_fibonacci.js') }}"></script>

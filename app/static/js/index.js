@@ -3,12 +3,14 @@ const form = document.querySelector("form");
 const input = document.querySelector("input");
 const searchButton = document.querySelector(".searchIcon");
 const checkboxInput = document.querySelector('input[type="checkbox"]');
+const aLogin = document.getElementById("loginLogout");
 
 // URLs dos ícones de Pokébola, fornecidos pelo template HTML
 const pokeballIcon = document.querySelector("#pokeballIcon").dataset.url;
 const pokeballFillIcon =
   document.querySelector("#pokeballFillIcon").dataset.url;
 
+aLogin.addEventListener("click", removeUser);
 checkboxInput.addEventListener("change", checkCheckboxStatus);
 searchButton.addEventListener("click", searchPokemon);
 form.addEventListener("submit", function (event) {
@@ -37,7 +39,6 @@ async function getAllPokemon() {
 
     // Renderiza os cards de Pokémon
     pokemons.forEach((poke) => renderCard(poke));
-  
   } catch (error) {
     console.error(error);
     alert("Não foi possível carregar os Pokémons.");
@@ -48,6 +49,10 @@ window.onload = function () {
   // Chame a função após a verificação do login
   checkAuthAndEnableCheckbox();
   getAllPokemon();
+  if (isAuthenticated) {
+    aLogin.href = "/";
+    aLogin.innerHTML = "Sair";
+  }
 };
 
 async function captureButtonPressed(event, id_pokemon) {
@@ -203,4 +208,8 @@ function checkAuthAndEnableCheckbox() {
   } else {
     checkboxInput.disabled = true;
   }
+}
+
+function removeUser() {
+  localStorage.removeItem("User");
 }
